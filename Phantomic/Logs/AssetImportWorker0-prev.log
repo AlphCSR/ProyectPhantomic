@@ -1,6 +1,6 @@
 Using pre-set license
 Built from '2020.3/staging' branch; Version is '2020.3.19f1 (68f137dc9bbe) revision 6877495'; Using compiler version '192528614'; Build Type 'Release'
-OS: 'Windows 10 Pro; OS build 19043.1466; Version 2009; 64bit' Language: 'es' Physical Memory: 7981 MB
+OS: 'Windows 10 Pro; OS build 19043.1526; Version 2009; 64bit' Language: 'es' Physical Memory: 7981 MB
 BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
 
 COMMAND LINE ARGUMENTS:
@@ -11,19 +11,19 @@ C:\Program Files\Unity\Hub\Editor\2020.3.19f1\Editor\Unity.exe
 -name
 AssetImportWorker0
 -projectPath
-C:/Users/Indatech/Documents/Programacion/ProjectPhatomic
+C:/Users/Indatech/Documents/Programacion/D2 Phantomic/Phantomic
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-63369
-Successfully changed project path to: C:/Users/Indatech/Documents/Programacion/ProjectPhatomic
-C:/Users/Indatech/Documents/Programacion/ProjectPhatomic
+52839
+Successfully changed project path to: C:/Users/Indatech/Documents/Programacion/D2 Phantomic/Phantomic
+C:/Users/Indatech/Documents/Programacion/D2 Phantomic/Phantomic
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 61.71 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 710.70 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.3.19f1 (68f137dc9bbe)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.19f1/Editor/Data/Resources/UnitySubsystems
-[Subsystems] Discovering subsystems at path C:/Users/Indatech/Documents/Programacion/ProjectPhatomic/Assets
+[Subsystems] Discovering subsystems at path C:/Users/Indatech/Documents/Programacion/D2 Phantomic/Phantomic/Assets
 GfxDevice: creating device client; threaded=0
 Direct3D:
     Version:  Direct3D 11.0 [level 11.1]
@@ -35,5 +35,5 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.19f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.19f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.19f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56796
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56472
 Begin MonoManager ReloadAssembly

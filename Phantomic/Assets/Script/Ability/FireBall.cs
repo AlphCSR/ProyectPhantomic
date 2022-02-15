@@ -15,8 +15,13 @@ public class FireBall : MonoBehaviour
 
     public void Update()
     {
+        ProyectilDirection();
+    }
+
+    public void ProyectilDirection()
+    {
         RaycastHit hit;
- 
+
 
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -34,7 +39,7 @@ public class FireBall : MonoBehaviour
             }
             else if (Input.GetKey(KeyCode.A))
             {
-                if(Physics.Raycast(playerPosition.position, Vector3.left , out hit, range))
+                if (Physics.Raycast(playerPosition.position, Vector3.left, out hit, range))
                 {
 
                     if (hit.collider.tag == "Enemy")
@@ -46,7 +51,7 @@ public class FireBall : MonoBehaviour
             }
             else if (Input.GetKey(KeyCode.S))
             {
-                if(Physics.Raycast(playerPosition.position, Vector3.back, out hit, range))
+                if (Physics.Raycast(playerPosition.position, Vector3.back, out hit, range))
                 {
 
                     if (hit.collider.tag == "Enemy")
@@ -67,8 +72,8 @@ public class FireBall : MonoBehaviour
                     }
                 }
             }
-            
+
         }
-        
     }
+
 }

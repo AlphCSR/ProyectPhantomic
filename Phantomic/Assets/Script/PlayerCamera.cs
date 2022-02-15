@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
-    public Transform[] PlayerView;
-    public float transitionSpeed = 1000f;
+    [SerializeField]public Transform[] PlayerView;
+    [SerializeField]public float transitionSpeed = 1000f;
     public Transform currentView;
     public void Start()
     {
@@ -16,34 +16,30 @@ public class PlayerCamera : MonoBehaviour
     {
         SwapCamera();
     }
-
+  
     public void LateUpdate()
     {
         transform.position = Vector3.Lerp(transform.position, currentView.position, Time.deltaTime * transitionSpeed);
-        Vector3 currentAngle = new Vector3( Mathf.Lerp(transform.rotation.eulerAngles.x, currentView.transform.rotation.eulerAngles.x, Time.deltaTime * transitionSpeed),
-                                            Mathf.Lerp(transform.rotation.eulerAngles.y, currentView.transform.rotation.eulerAngles.y, Time.deltaTime * transitionSpeed),
-                                            Mathf.Lerp(transform.rotation.eulerAngles.z, currentView.transform.rotation.eulerAngles.z, Time.deltaTime * transitionSpeed)
-                                           );
+        Vector3 currentAngle = new Vector3( Mathf.Lerp(transform.rotation.eulerAngles.x, currentView.transform.rotation.eulerAngles.x, Time.deltaTime * transitionSpeed),Mathf.Lerp(transform.rotation.eulerAngles.y, currentView.transform.rotation.eulerAngles.y, Time.deltaTime * transitionSpeed),Mathf.Lerp(transform.rotation.eulerAngles.z, currentView.transform.rotation.eulerAngles.z, Time.deltaTime * transitionSpeed));
         transform.eulerAngles = currentAngle;
     }
-
     void SwapCamera()
     {
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            currentView = PlayerView[2];
+            currentView = PlayerView[0];
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            currentView = PlayerView[0];
+            currentView = PlayerView[1];
+        }
+        else if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            currentView = PlayerView[2];
         }
         else if (Input.GetKey(KeyCode.DownArrow))
         {
             currentView = PlayerView[3];
-        }
-        else if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            currentView = PlayerView[1];
         }
     }
 }

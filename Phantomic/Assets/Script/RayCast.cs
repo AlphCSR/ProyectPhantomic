@@ -4,15 +4,7 @@ using UnityEngine;
 
 public class RayCast : MonoBehaviour
 {
-    public float range = 4f;
-
-
-    void Start()
-    {
-    }
-    void Update()
-    { 
-    }
+    [SerializeField] public float range = 4f;
 
     public void OnDrawGizmos()
     {
