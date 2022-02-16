@@ -14,6 +14,7 @@ public class Clone : MonoBehaviour
     public bool active = false;
     public float walk;
     public char lastKey;
+    public float range = 2f;
 
 
     public void Start()
@@ -58,68 +59,99 @@ public class Clone : MonoBehaviour
             cloneMovementInput.MovePosition(cloneMovementInput.position + Vector3.left * walk * Time.fixedDeltaTime);
     }
 
-    /*
-    public bool GolpePared()
+    public bool Collision()
     {
         RaycastHit hit;
 
-        if (Physics.Raycast(playerTransform.position, Vector3.forward, out hit, 2.5f))
+        if (lastKey == 'W')
         {
-            if (hit.transform.tag == "Block") return true;
-            else return false;
+            if (Physics.Raycast(playerTransform.position, Vector3.forward, out hit, range))
+            {
+
+                if (hit.collider.tag == "Block")
+                {
+                    Debug.Log("Pared");
+                    return false;
+                }
+
+            }
         }
-        else if (Physics.Raycast(playerTransform.position, Vector3.left, out hit, 2.5f))
+        else if (lastKey == 'A')
         {
-            if (hit.transform.tag == "Block") return true;
-            else return false;
+            if (Physics.Raycast(playerTransform.position, Vector3.left, out hit, range))
+            {
+
+                if (hit.collider.tag == "Block")
+                {
+                    Debug.Log("Pared");
+                    return false;
+                }
+
+            }
         }
-        else if (Physics.Raycast(playerTransform.position, Vector3.right, out hit, 2.5f))
+        else if (lastKey == 'S')
         {
-            if (hit.transform.tag == "Block") return true;
-            else return false;
+            if (Physics.Raycast(playerTransform.position, Vector3.back, out hit, range))
+            {
+
+                if (hit.collider.tag == "Block")
+                {
+                    Debug.Log("Pared");
+                    return false;
+                }
+
+            }
         }
-        else if (Physics.Raycast(playerTransform.position, Vector3.back, out hit, 2.5f))
+        else if (lastKey == 'D')
         {
-            if (hit.transform.tag == "Block") return true;
-            else return false;
+            if (Physics.Raycast(playerTransform.position, Vector3.right, out hit, range))
+            {
+
+                if (hit.collider.tag == "Block")
+                {
+                    Debug.Log("Pared");
+                    return false;
+                }
+            }
         }
-        else
-            return true;
+        return true;
     }
-    */
+
     public void Clonation()
     {
 
         if (active)
         {
-            if ((Input.GetKey(KeyCode.W)) || (lastKey == 'W'))
+            if (Collision())
             {
+                if ((Input.GetKey(KeyCode.W)) || (lastKey == 'W'))
+                {
                     clonePlayer.transform.position = new Vector3(Mathf.Lerp(clonePlayer.transform.position.x, playerTransform.position.x, Time.deltaTime * 1000),
                                                               Mathf.Lerp(clonePlayer.transform.position.y, playerTransform.position.y, Time.deltaTime * 1000),
                                                               Mathf.Lerp(clonePlayer.transform.position.z, playerTransform.position.z + 1.5f, Time.deltaTime * 1000));
-            }
-            else if ((Input.GetKey(KeyCode.A)) || (lastKey == 'A'))
-            {
+                }
+                else if ((Input.GetKey(KeyCode.A)) || (lastKey == 'A'))
+                {
                     clonePlayer.transform.position = new Vector3(Mathf.Lerp(clonePlayer.transform.position.x, playerTransform.position.x - 1.5f, Time.deltaTime * 1000),
                                                           Mathf.Lerp(clonePlayer.transform.position.y, playerTransform.position.y, Time.deltaTime * 1000),
                                                           Mathf.Lerp(clonePlayer.transform.position.z, playerTransform.position.z, Time.deltaTime * 1000));
-            }
-            else if ((Input.GetKey(KeyCode.S)) || (lastKey == 'S'))
-            {
+                }
+                else if ((Input.GetKey(KeyCode.S)) || (lastKey == 'S'))
+                {
                     clonePlayer.transform.position = new Vector3(Mathf.Lerp(clonePlayer.transform.position.x, playerTransform.position.x, Time.deltaTime * 1000),
                                                           Mathf.Lerp(clonePlayer.transform.position.y, playerTransform.position.y, Time.deltaTime * 1000),
                                                           Mathf.Lerp(clonePlayer.transform.position.z, playerTransform.position.z - 1.5f, Time.deltaTime * 1000));
+                }
+                else if ((Input.GetKey(KeyCode.D)) || (lastKey == 'D'))
+                {
+                    clonePlayer.transform.position = new Vector3(Mathf.Lerp(clonePlayer.transform.position.x, playerTransform.position.x + 1.5f, Time.deltaTime * 1000),
+                                                                Mathf.Lerp(clonePlayer.transform.position.y, playerTransform.position.y, Time.deltaTime * 1000),
+                                                                Mathf.Lerp(clonePlayer.transform.position.z, playerTransform.position.z, Time.deltaTime * 1000));
+                }
+                active = false;
+                cooldown = 1000f;
             }
-            else if ((Input.GetKey(KeyCode.D)) || (lastKey == 'D'))
-            {
-                clonePlayer.transform.position = new Vector3(Mathf.Lerp(clonePlayer.transform.position.x, playerTransform.position.x + 1.5f, Time.deltaTime * 1000),
-                                                            Mathf.Lerp(clonePlayer.transform.position.y, playerTransform.position.y, Time.deltaTime * 1000),
-                                                            Mathf.Lerp(clonePlayer.transform.position.z, playerTransform.position.z, Time.deltaTime * 1000));
-               
-            }
-
-            active = false;
-            cooldown = 1000f;   
+            
         }
     }
 }

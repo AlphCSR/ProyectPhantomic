@@ -8,6 +8,7 @@ public class TeleportPoint : MonoBehaviour
     public Transform playerTransform;
     public float cooldown = 0f;
     public bool active = false;
+    public float range = 2f;
 
     public void Start()
     {
@@ -16,8 +17,10 @@ public class TeleportPoint : MonoBehaviour
 
     public void Update()
     {
-        if(cooldown > 0f)
-        cooldown -= 1f;
+        if (cooldown > 0f)
+        {
+            cooldown -= 1f;
+        }
         SetTeleport();
     }
 
@@ -25,13 +28,13 @@ public class TeleportPoint : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && active == false)
         {
-            TeleportSpawn.transform.position = new Vector3( Mathf.Lerp(TeleportSpawn.transform.position.x, playerTransform.position.x, Time.deltaTime * 1000),
+            TeleportSpawn.transform.position = new Vector3(Mathf.Lerp(TeleportSpawn.transform.position.x, playerTransform.position.x, Time.deltaTime * 1000),
                                                             Mathf.Lerp(TeleportSpawn.transform.position.y, 0.1f, Time.deltaTime * 1000),
-                                                            Mathf.Lerp(TeleportSpawn.transform.position.z, playerTransform.position.z, Time.deltaTime * 1000)  );
+                                                            Mathf.Lerp(TeleportSpawn.transform.position.z, playerTransform.position.z, Time.deltaTime * 1000));
 
             TeleportSpawn.SetActive(true);
             active = true;
-                
+    
         }
         else if (Input.GetKeyDown(KeyCode.E) && active == true)
         {

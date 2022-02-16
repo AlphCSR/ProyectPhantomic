@@ -9,8 +9,14 @@ public class Player3 : PlayerBase
 
     public void Start()
     {
+        //Movement
+        base.playerMovementInput = GetComponent<Rigidbody>();
+
         //Speed
         speed.walk = walk;
+
+        //Blindness
+        blindness.Start();
     }
 
     public void Update()
@@ -18,6 +24,9 @@ public class Player3 : PlayerBase
         //Speed
         walk = speed.walk;
         speed.Update();
-    }
 
+        //Blindness
+        blindness.transform.position = transform.position;
+        blindness.Update();
+    }
 }

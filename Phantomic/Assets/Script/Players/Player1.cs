@@ -19,10 +19,13 @@ public class Player1 : PlayerBase
 
     public void Start()
     {
-        base.playerMovementInput = GetComponent<Rigidbody>();
+        //Player
         playerCollider = GetComponent<Collider>();
         playerRenderer = GetComponent<Renderer>();
         playerMaterial = playerRenderer.material;
+
+        //Movement
+        base.playerMovementInput = GetComponent<Rigidbody>();
 
         //Clone
         clone.walk = base.walk;
@@ -39,6 +42,7 @@ public class Player1 : PlayerBase
     {
         //Invisible
         invisible.Update();
+
         //Clone
         clone.Update();
         clone.lastKey = base.lastKey;

@@ -9,6 +9,9 @@ public class Player2 : PlayerBase
 
     public void Start()
     {
+        //Movement
+        base.playerMovementInput = GetComponent<Rigidbody>();
+
         //FireBall
         fireBall.playerPosition = transform;
 

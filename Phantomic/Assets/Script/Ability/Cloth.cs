@@ -4,45 +4,11 @@ using UnityEngine;
 
 public class Cloth : MonoBehaviour
 {
-    public float range = 1f;
-    GameObject cloth;
-    void Update()
+    public void OnDrawGizmos()
     {
-        
+        Gizmos.color = Color.yellow;
+
+        Gizmos.DrawRay(transform.position, Vector3.up * 1f);
     }
-    void OnTriggerEnter(Collider other)
-    {
-        RaycastHit hit;
 
-        if (Physics.Raycast(cloth.transform.position, Vector3.forward, out hit, range))
-        {
-            if (hit.collider.tag == "Enemy")
-            {
-                Destroy(GameObject.FindGameObjectWithTag(hit.collider.tag));
-            }
-
-        }
-        else if (Physics.Raycast(cloth.transform.position, Vector3.left, out hit, range))
-        {
-            if (hit.collider.tag == "Enemy")
-            {
-            Destroy(GameObject.FindGameObjectWithTag(hit.collider.tag));
-            }
-        }
-
-        else if (Physics.Raycast(cloth.transform.position, Vector3.back, out hit, range))
-        {
-            if (hit.collider.tag == "Enemy")
-            {
-                Destroy(GameObject.FindGameObjectWithTag(hit.collider.tag));
-            }
-        }
-        else if (Physics.Raycast(cloth.transform.position, Vector3.right, out hit, range))
-        {
-            if (hit.collider.tag == "Enemy")
-            {
-                Destroy(GameObject.FindGameObjectWithTag(hit.collider.tag));
-            }
-        }
-    }
 }

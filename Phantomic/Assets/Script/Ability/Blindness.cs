@@ -7,42 +7,143 @@ public class Blindness : MonoBehaviour
     public GameObject cloth;
     public char lastKey;
     public Transform playerTransform;
+    public float cooldown = 0f;
+    public bool active = false;
+    public float range = 2.5f;
 
-    void Start()
+    public void Start()
     {
-        cloth.SetActive(false);
+        cloth.SetActive(true);
     }
-    void Update()
+    public void Update()
     {
-        //Sistema Coldown
+        if (cooldown > 0f)
+        {
+            cooldown -= 1f;
+        }          
+        SetCloth();
+        Trap();
+    }
+
+    public bool Collision()
+    {
+        RaycastHit hit;
+
+        if (lastKey == 'W')
+        {
+            if (Physics.Raycast(playerTransform.position, Vector3.forward, out hit, range))
+            {
+
+                if (hit.collider.tag == "Block")
+                {
+                    Debug.Log("Pared");
+                    return false;
+                }
+
+            }
+        }
+        else if (lastKey == 'A')
+        {
+            if (Physics.Raycast(playerTransform.position, Vector3.left, out hit, range))
+            {
+
+                if (hit.collider.tag == "Block")
+                {
+                    Debug.Log("Pared");
+                    return false;
+                }
+
+            }
+        }
+        else if (lastKey == 'S')
+        {
+            if (Physics.Raycast(playerTransform.position, Vector3.back, out hit, range))
+            {
+
+                if (hit.collider.tag == "Block")
+                {
+                    Debug.Log("Pared");
+                    return false;
+                }
+
+            }
+        }
+        else if (lastKey == 'D')
+        {
+            if (Physics.Raycast(playerTransform.position, Vector3.right, out hit, range))
+            {
+
+                if (hit.collider.tag == "Block")
+                {
+                    Debug.Log("Pared");
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public void SetCloth()
     {
-        if ((Input.GetKey(KeyCode.W)) || (lastKey == 'W'))
+
+        if (Input.GetKeyDown(KeyCode.R) && active == false)
         {
-            cloth.transform.position = new Vector3(Mathf.Lerp(cloth.transform.position.x, playerTransform.position.x, Time.deltaTime* 1000),
-                                                        Mathf.Lerp(cloth.transform.position.y, playerTransform.position.y, Time.deltaTime* 1000),
-                                                        Mathf.Lerp(cloth.transform.position.z, playerTransform.position.z + 3f, Time.deltaTime* 1000));
+            if (Collision())
+            {
+                cloth.SetActive(true);
+                if ((Input.GetKey(KeyCode.W)) || (lastKey == 'W'))
+                {
+                    cloth.transform.position = new Vector3(Mathf.Lerp(cloth.transform.position.x, playerTransform.position.x, Time.deltaTime * 1000),
+                                                                Mathf.Lerp(cloth.transform.position.y, 0.1f, Time.deltaTime * 1000),
+                                                                Mathf.Lerp(cloth.transform.position.z, playerTransform.position.z + 3f, Time.deltaTime * 1000));
+                }
+                else if ((Input.GetKey(KeyCode.A)) || (lastKey == 'A'))
+                {
+                    cloth.transform.position = new Vector3(Mathf.Lerp(cloth.transform.position.x, playerTransform.position.x - 3f, Time.deltaTime * 1000),
+                                                                Mathf.Lerp(cloth.transform.position.y, 0.1f, Time.deltaTime * 1000),
+                                                                Mathf.Lerp(cloth.transform.position.z, playerTransform.position.z, Time.deltaTime * 1000));
+                }
+                else if ((Input.GetKey(KeyCode.S)) || (lastKey == 'S'))
+                {
+                    cloth.transform.position = new Vector3(Mathf.Lerp(cloth.transform.position.x, playerTransform.position.x, Time.deltaTime * 1000),
+                                                                Mathf.Lerp(cloth.transform.position.y, 0.1f, Time.deltaTime * 1000),
+                                                                Mathf.Lerp(cloth.transform.position.z, playerTransform.position.z - 3f, Time.deltaTime * 1000));
+                }
+                else if ((Input.GetKey(KeyCode.D)) || (lastKey == 'D'))
+                {
+                    cloth.transform.position = new Vector3(Mathf.Lerp(cloth.transform.position.x, playerTransform.position.x + 3f, Time.deltaTime * 1000),
+                                                                Mathf.Lerp(cloth.transform.position.y, 0.1f, Time.deltaTime * 1000),
+                                                                Mathf.Lerp(cloth.transform.position.z, playerTransform.position.z, Time.deltaTime * 1000));
+                }
+
+                
+                active = true;
+
+            }
+
         }
-        else if ((Input.GetKey(KeyCode.A)) || (lastKey == 'A'))
-        {
-            cloth.transform.position = new Vector3(Mathf.Lerp(cloth.transform.position.x, playerTransform.position.x - 3f, Time.deltaTime * 1000),
-                                                        Mathf.Lerp(cloth.transform.position.y, playerTransform.position.y, Time.deltaTime * 1000),
-                                                        Mathf.Lerp(cloth.transform.position.z, playerTransform.position.z, Time.deltaTime * 1000));
+        else
+        { 
+            
+            active = false;
+            cooldown = 1000f;
         }
-        else if ((Input.GetKey(KeyCode.S)) || (lastKey == 'S'))
+
+        
+    }
+    void Trap()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(cloth.transform.position, Vector3.up, out hit, 1f))
         {
-            cloth.transform.position = new Vector3(Mathf.Lerp(cloth.transform.position.x, playerTransform.position.x, Time.deltaTime * 1000),
-                                                        Mathf.Lerp(cloth.transform.position.y, playerTransform.position.y, Time.deltaTime * 1000),
-                                                        Mathf.Lerp(cloth.transform.position.z, playerTransform.position.z - 3f, Time.deltaTime * 1000));
-        }
-        else if ((Input.GetKey(KeyCode.D)) || (lastKey == 'D'))
-        {
-            cloth.transform.position = new Vector3(Mathf.Lerp(cloth.transform.position.x, playerTransform.position.x + 3f, Time.deltaTime * 1000),
-                                                        Mathf.Lerp(cloth.transform.position.y, playerTransform.position.y, Time.deltaTime * 1000),
-                                                        Mathf.Lerp(cloth.transform.position.z, playerTransform.position.z, Time.deltaTime * 1000));
+            if (hit.collider.tag == "Player") //Solo para testear
+            { 
+                Debug.Log("Enemigo Cegado");
+                cloth.SetActive(false);
+            }
         }
     }
+
 
 }

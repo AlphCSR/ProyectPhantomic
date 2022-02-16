@@ -11,8 +11,6 @@ public class PlayerBase : MonoBehaviour
 
     protected char lastKey; 
 
-    // Start is called before the first frame update
-
     public void FixedUpdate()
     {
         Movement();
@@ -22,6 +20,7 @@ public class PlayerBase : MonoBehaviour
     {
         playerCamera.LateUpdate();
     }
+
 
     public void Movement()
     {
@@ -46,5 +45,4 @@ public class PlayerBase : MonoBehaviour
             lastKey = 'D';
         }
     }
-
 }

@@ -32,7 +32,7 @@ public class FireBall : MonoBehaviour
 
                     if (hit.collider.tag == "Enemy")
                     {
-                        Destroy(GameObject.FindGameObjectWithTag(hit.collider.tag));
+                        Destroy(GameObject.FindGameObjectWithTag(hit.collider.tag), 2f);
                     }
 
                 }
@@ -44,7 +44,7 @@ public class FireBall : MonoBehaviour
 
                     if (hit.collider.tag == "Enemy")
                     {
-                        Destroy(GameObject.FindGameObjectWithTag(hit.collider.tag));
+                        Destroy(GameObject.FindGameObjectWithTag(hit.collider.tag), 2f);
                     }
 
                 }
@@ -56,7 +56,7 @@ public class FireBall : MonoBehaviour
 
                     if (hit.collider.tag == "Enemy")
                     {
-                        Destroy(GameObject.FindGameObjectWithTag(hit.collider.tag));
+                        Destroy(GameObject.FindGameObjectWithTag(hit.collider.tag), 2f);
                     }
 
                 }
@@ -68,7 +68,7 @@ public class FireBall : MonoBehaviour
 
                     if (hit.collider.tag == "Enemy")
                     {
-                        Destroy(GameObject.FindGameObjectWithTag(hit.collider.tag));
+                        Destroy(GameObject.FindGameObjectWithTag(hit.collider.tag), 2f);
                     }
                 }
             }
