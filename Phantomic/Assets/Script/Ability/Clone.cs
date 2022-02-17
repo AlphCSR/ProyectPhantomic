@@ -67,46 +67,39 @@ public class Clone : MonoBehaviour
         {
             if (Physics.Raycast(playerTransform.position, Vector3.forward, out hit, range))
             {
-
                 if (hit.collider.tag == "Block")
                 {
                     Debug.Log("Pared");
                     return false;
                 }
-
             }
         }
         else if (lastKey == 'A')
         {
             if (Physics.Raycast(playerTransform.position, Vector3.left, out hit, range))
             {
-
                 if (hit.collider.tag == "Block")
                 {
                     Debug.Log("Pared");
                     return false;
                 }
-
             }
         }
         else if (lastKey == 'S')
         {
             if (Physics.Raycast(playerTransform.position, Vector3.back, out hit, range))
             {
-
                 if (hit.collider.tag == "Block")
                 {
                     Debug.Log("Pared");
                     return false;
                 }
-
             }
         }
         else if (lastKey == 'D')
         {
             if (Physics.Raycast(playerTransform.position, Vector3.right, out hit, range))
             {
-
                 if (hit.collider.tag == "Block")
                 {
                     Debug.Log("Pared");
@@ -150,8 +143,7 @@ public class Clone : MonoBehaviour
                 }
                 active = false;
                 cooldown = 1000f;
-            }
-            
+            }      
         }
     }
 }

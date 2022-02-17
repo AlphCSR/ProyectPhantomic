@@ -11,12 +11,6 @@ public class Player1 : PlayerBase
     [SerializeField]private Invisible invisible;
     [SerializeField]private Clone clone;
 
-
-    public void Awake()
-    {
-        invisible.Awake();
-    }
-
     public void Start()
     {
         //Player
@@ -34,7 +28,6 @@ public class Player1 : PlayerBase
 
         //Invisible
         invisible.Base = playerMaterial;
-        invisible.playerCollider = playerCollider;
         invisible.playerRenderer = playerRenderer;
     }
 

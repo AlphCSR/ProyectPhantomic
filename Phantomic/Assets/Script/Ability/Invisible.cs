@@ -9,13 +9,7 @@ public class Invisible : MonoBehaviour
     public Material Inv;
     public Material Base;
     public Renderer playerRenderer;
-    public Collider playerCollider;
 
-    public void Awake()
-    {
-    }
-
-    // Update is called once per frame
     public void Update()
     {
         if (cooldown == 0f)
@@ -35,6 +29,7 @@ public class Invisible : MonoBehaviour
             cooldown -= 1f;
         }
     }
+
     private void Invisibility()
     {
         if (active)

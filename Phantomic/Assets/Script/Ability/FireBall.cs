@@ -6,74 +6,36 @@ public class FireBall : MonoBehaviour
 {
     public float range = 4f;
     public Transform playerPosition;
-
-
-    public void Start()
-    {
-    
-    } 
+    public GameObject fireBall;
+    public char lastKey;
 
     public void Update()
     {
-        ProyectilDirection();
+        FireRocket();
     }
 
-    public void ProyectilDirection()
+    void FireRocket()
     {
-        RaycastHit hit;
-
-
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (Input.GetKey(KeyCode.W))
+            GameObject rocketClone = Instantiate(fireBall, playerPosition.position, playerPosition.rotation);
+
+            if (lastKey == 'W')
             {
-                if (Physics.Raycast(playerPosition.position, Vector3.forward, out hit, range))
-                {
-
-                    if (hit.collider.tag == "Enemy")
-                    {
-                        Destroy(GameObject.FindGameObjectWithTag(hit.collider.tag), 2f);
-                    }
-
-                }
+                rocketClone.GetComponent<Rigidbody>().velocity = transform.forward * 2f;
             }
-            else if (Input.GetKey(KeyCode.A))
+            else if (lastKey == 'A')
             {
-                if (Physics.Raycast(playerPosition.position, Vector3.left, out hit, range))
-                {
-
-                    if (hit.collider.tag == "Enemy")
-                    {
-                        Destroy(GameObject.FindGameObjectWithTag(hit.collider.tag), 2f);
-                    }
-
-                }
+                rocketClone.GetComponent<Rigidbody>().velocity = transform.right * -2f;
             }
-            else if (Input.GetKey(KeyCode.S))
+            else if (lastKey == 'D')
             {
-                if (Physics.Raycast(playerPosition.position, Vector3.back, out hit, range))
-                {
-
-                    if (hit.collider.tag == "Enemy")
-                    {
-                        Destroy(GameObject.FindGameObjectWithTag(hit.collider.tag), 2f);
-                    }
-
-                }
+                rocketClone.GetComponent<Rigidbody>().velocity = transform.right * 2f;
             }
-            else if (Input.GetKey(KeyCode.D))
+            else if (lastKey == 'S')
             {
-                if (Physics.Raycast(playerPosition.position, Vector3.right, out hit, range))
-                {
-
-                    if (hit.collider.tag == "Enemy")
-                    {
-                        Destroy(GameObject.FindGameObjectWithTag(hit.collider.tag), 2f);
-                    }
-                }
+                rocketClone.GetComponent<Rigidbody>().velocity = transform.forward * -2f;
             }
-
         }
     }
-
 }

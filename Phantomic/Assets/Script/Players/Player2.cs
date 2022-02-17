@@ -28,5 +28,6 @@ public class Player2 : PlayerBase
         //FireBall
         fireBall.playerPosition = transform;
         fireBall.Update();
+        fireBall.lastKey = base.lastKey;
     }
 }
