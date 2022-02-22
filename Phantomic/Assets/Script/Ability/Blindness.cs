@@ -22,7 +22,6 @@ public class Blindness : MonoBehaviour
             cooldown -= 1f;
         }          
         SetCloth();
-        Trap();
     }
 
     public bool Collision()
@@ -131,19 +130,4 @@ public class Blindness : MonoBehaviour
 
         
     }
-    void Trap()
-    {
-        RaycastHit hit;
-
-        if (Physics.Raycast(cloth.transform.position, Vector3.up, out hit, 1f))
-        {
-            if (hit.collider.tag == "Player") //Solo para testear
-            { 
-                Debug.Log("Enemigo Cegado");
-                cloth.SetActive(false);
-            }
-        }
-    }
-
-
 }

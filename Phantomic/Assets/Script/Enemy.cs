@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         
@@ -18,11 +17,20 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //FireBall
         if(other.gameObject.tag == "Proyectil")
         {
             Destroy(other.gameObject);
             Destroy(this.gameObject);
         }
+
+        //Blindness
+        if(other.gameObject.tag == "Cloth" )
+        {
+            Debug.Log("Enemigo Cegado");
+            other.gameObject.SetActive(false);
+        }
+
     }
 
 }

@@ -9,10 +9,11 @@ public class TeleportPoint : MonoBehaviour
     public float cooldown = 0f;
     public bool active = false;
     public float range = 2f;
+    public GameObject CloneTp;
 
     public void Start()
     {
-        TeleportSpawn.SetActive(false);
+        TeleportSpawn.SetActive(true);
     }
 
     public void Update()
@@ -28,11 +29,10 @@ public class TeleportPoint : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && active == false)
         {
+            TeleportSpawn.SetActive(true);
             TeleportSpawn.transform.position = new Vector3(Mathf.Lerp(TeleportSpawn.transform.position.x, playerTransform.position.x, Time.deltaTime * 1000),
                                                             Mathf.Lerp(TeleportSpawn.transform.position.y, 0.1f, Time.deltaTime * 1000),
                                                             Mathf.Lerp(TeleportSpawn.transform.position.z, playerTransform.position.z, Time.deltaTime * 1000));
-
-            TeleportSpawn.SetActive(true);
             active = true;
     
         }
@@ -46,4 +46,5 @@ public class TeleportPoint : MonoBehaviour
             cooldown = 1000f;
         }
     }
+
 }
