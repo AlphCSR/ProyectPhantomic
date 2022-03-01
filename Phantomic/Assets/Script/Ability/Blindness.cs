@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class Blindness : MonoBehaviour
 {
-    public GameObject cloth;
-    public char lastKey;
-    public Transform playerTransform;
+    public GameObject clothProyectile;
+    public GameObject clothProyectileClone;
     public float cooldown = 0f;
+    public float distance = 0.6f;
     public bool active = false;
-    public float range = 2.5f;
+    private PlayerBase pb;
 
     public void Start()
     {
-        cloth.SetActive(true);
+
     }
     public void Update()
     {
+        pb = FindObjectOfType<PlayerBase>();
+
         if (cooldown > 0f)
         {
             cooldown -= 1f;
@@ -24,110 +26,38 @@ public class Blindness : MonoBehaviour
         SetCloth();
     }
 
-    public bool Collision()
-    {
-        RaycastHit hit;
-
-        if (lastKey == 'W')
-        {
-            if (Physics.Raycast(playerTransform.position, Vector3.forward, out hit, range))
-            {
-
-                if (hit.collider.tag == "Block")
-                {
-                    Debug.Log("Pared");
-                    return false;
-                }
-
-            }
-        }
-        else if (lastKey == 'A')
-        {
-            if (Physics.Raycast(playerTransform.position, Vector3.left, out hit, range))
-            {
-
-                if (hit.collider.tag == "Block")
-                {
-                    Debug.Log("Pared");
-                    return false;
-                }
-
-            }
-        }
-        else if (lastKey == 'S')
-        {
-            if (Physics.Raycast(playerTransform.position, Vector3.back, out hit, range))
-            {
-
-                if (hit.collider.tag == "Block")
-                {
-                    Debug.Log("Pared");
-                    return false;
-                }
-
-            }
-        }
-        else if (lastKey == 'D')
-        {
-            if (Physics.Raycast(playerTransform.position, Vector3.right, out hit, range))
-            {
-
-                if (hit.collider.tag == "Block")
-                {
-                    Debug.Log("Pared");
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
     public void SetCloth()
     {
-
         if (Input.GetKeyDown(KeyCode.R) && active == false)
         {
-            if (Collision())
+            if (pb.Collision())
             {
-                cloth.SetActive(true);
-                if ((Input.GetKey(KeyCode.W)) || (lastKey == 'W'))
+                if ((Input.GetKey(KeyCode.W)) || (pb.lastKey == 'W'))
                 {
-                    cloth.transform.position = new Vector3(Mathf.Lerp(cloth.transform.position.x, playerTransform.position.x, Time.deltaTime * 1000),
-                                                                Mathf.Lerp(cloth.transform.position.y, 0.1f, Time.deltaTime * 1000),
-                                                                Mathf.Lerp(cloth.transform.position.z, playerTransform.position.z + 3f, Time.deltaTime * 1000));
+                    clothProyectileClone = Instantiate(clothProyectile, new Vector3(pb.playerTransform.position.x, pb.playerTransform.position.y, pb.playerTransform.position.z + distance), pb.playerTransform.rotation);                   
                 }
-                else if ((Input.GetKey(KeyCode.A)) || (lastKey == 'A'))
+                else if ((Input.GetKey(KeyCode.A)) || (pb.lastKey == 'A'))
                 {
-                    cloth.transform.position = new Vector3(Mathf.Lerp(cloth.transform.position.x, playerTransform.position.x - 3f, Time.deltaTime * 1000),
-                                                                Mathf.Lerp(cloth.transform.position.y, 0.1f, Time.deltaTime * 1000),
-                                                                Mathf.Lerp(cloth.transform.position.z, playerTransform.position.z, Time.deltaTime * 1000));
+                    clothProyectileClone = Instantiate(clothProyectile, new Vector3(pb.playerTransform.position.x - distance, pb.playerTransform.position.y, pb.playerTransform.position.z), pb.playerTransform.rotation);
                 }
-                else if ((Input.GetKey(KeyCode.S)) || (lastKey == 'S'))
+                else if ((Input.GetKey(KeyCode.S)) || (pb.lastKey == 'S'))
                 {
-                    cloth.transform.position = new Vector3(Mathf.Lerp(cloth.transform.position.x, playerTransform.position.x, Time.deltaTime * 1000),
-                                                                Mathf.Lerp(cloth.transform.position.y, 0.1f, Time.deltaTime * 1000),
-                                                                Mathf.Lerp(cloth.transform.position.z, playerTransform.position.z - 3f, Time.deltaTime * 1000));
+                    clothProyectileClone = Instantiate(clothProyectile, new Vector3(pb.playerTransform.position.x, pb.playerTransform.position.y, pb.playerTransform.position.z - distance), pb.playerTransform.rotation);
                 }
-                else if ((Input.GetKey(KeyCode.D)) || (lastKey == 'D'))
+                else if ((Input.GetKey(KeyCode.D)) || (pb.lastKey == 'D'))
                 {
-                    cloth.transform.position = new Vector3(Mathf.Lerp(cloth.transform.position.x, playerTransform.position.x + 3f, Time.deltaTime * 1000),
-                                                                Mathf.Lerp(cloth.transform.position.y, 0.1f, Time.deltaTime * 1000),
-                                                                Mathf.Lerp(cloth.transform.position.z, playerTransform.position.z, Time.deltaTime * 1000));
+                    clothProyectileClone = Instantiate(clothProyectile, new Vector3(pb.playerTransform.position.x + distance, pb.playerTransform.position.y, pb.playerTransform.position.z), pb.playerTransform.rotation);
                 }
-
-                
+                clothProyectileClone.SetActive(true);
                 active = true;
+                cooldown = 1000f;
 
             }
 
         }
         else
         { 
-            
             active = false;
-            cooldown = 1000f;
         }
-
-        
     }
 }

@@ -4,20 +4,21 @@ using UnityEngine;
 
 public class TeleportPoint : MonoBehaviour
 {
-    public GameObject TeleportSpawn;
-    public Transform playerTransform;
-    public float cooldown = 0f;
-    public bool active = false;
-    public float range = 2f;
-    public GameObject CloneTp;
+    private float cooldown = 0f;
+    private bool active = false;
+    private float range = 2f;
+    private GameObject cloneTeleport;
+    public GameObject Teleport;
+    private PlayerBase pb; 
 
     public void Start()
     {
-        TeleportSpawn.SetActive(true);
     }
 
     public void Update()
     {
+        pb = FindObjectOfType<PlayerBase>();
+
         if (cooldown > 0f)
         {
             cooldown -= 1f;
@@ -27,21 +28,18 @@ public class TeleportPoint : MonoBehaviour
 
     void SetTeleport() 
     {
-        if (Input.GetKeyDown(KeyCode.E) && active == false)
+        if ( (Input.GetKeyDown(KeyCode.E)) && (!active) )
         {
-            TeleportSpawn.SetActive(true);
-            TeleportSpawn.transform.position = new Vector3(Mathf.Lerp(TeleportSpawn.transform.position.x, playerTransform.position.x, Time.deltaTime * 1000),
-                                                            Mathf.Lerp(TeleportSpawn.transform.position.y, 0.1f, Time.deltaTime * 1000),
-                                                            Mathf.Lerp(TeleportSpawn.transform.position.z, playerTransform.position.z, Time.deltaTime * 1000));
+            cloneTeleport = Instantiate(Teleport, new Vector3(pb.playerTransform.position.x, 0.1f, pb.playerTransform.position.z), pb.playerTransform.rotation);
+            cloneTeleport.SetActive(true);
             active = true;
     
         }
-        else if (Input.GetKeyDown(KeyCode.E) && active == true)
+        else if ( (Input.GetKeyDown(KeyCode.E)) && (active) )
         {
-            playerTransform.position = new Vector3( Mathf.Lerp(playerTransform.position.x, TeleportSpawn.transform.position.x, Time.deltaTime * 1000),
-                                                    Mathf.Lerp(playerTransform.position.y, playerTransform.position.y, Time.deltaTime * 1000),
-                                                    Mathf.Lerp(playerTransform.position.z, TeleportSpawn.transform.position.z, Time.deltaTime * 1000)  );
-            TeleportSpawn.SetActive(false);
+            pb.playerTransform.position = new Vector3(cloneTeleport.transform.position.x, pb.playerTransform.position.y, cloneTeleport.transform.position.z);
+            cloneTeleport.SetActive(false);
+            Destroy(cloneTeleport);
             active = false;
             cooldown = 1000f;
         }

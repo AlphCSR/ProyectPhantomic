@@ -4,23 +4,22 @@ using UnityEngine;
 
 public class PlayerBase : MonoBehaviour
 {
-    protected Rigidbody playerMovementInput;
+    public Rigidbody playerMovementInput;
+    public float walk = 3f;
+    public char lastKey;
+    public Transform playerTransform;
+    public float range = 2.5f;
 
-    [SerializeField] protected float walk = 1.5f;
-    [SerializeField] private PlayerCamera playerCamera;
-
-    protected char lastKey; 
+    public void Awake()
+    {
+        playerMovementInput = GetComponent<Rigidbody>();
+        playerTransform = GetComponent<Transform>();
+    }
 
     public void FixedUpdate()
     {
         Movement();
     }
-
-    public void LateUpdate()
-    {
-        playerCamera.LateUpdate();
-    }
-
 
     public void Movement()
     {
@@ -44,5 +43,56 @@ public class PlayerBase : MonoBehaviour
             playerMovementInput.MovePosition(playerMovementInput.position + Vector3.right * walk * Time.deltaTime);
             lastKey = 'D';
         }
+    }
+
+    public bool Collision()
+    {
+        RaycastHit hit;
+
+        if (lastKey == 'W')
+        {
+            if (Physics.Raycast(playerTransform.position, Vector3.forward, out hit, range))
+            {
+                if (hit.collider.tag == "Block")
+                {
+                    Debug.Log("Pared");
+                    return false;
+                }
+            }
+        }
+        else if (lastKey == 'A')
+        {
+            if (Physics.Raycast(playerTransform.position, Vector3.left, out hit, range))
+            {
+                if (hit.collider.tag == "Block")
+                {
+                    Debug.Log("Pared");
+                    return false;
+                }
+            }
+        }
+        else if (lastKey == 'S')
+        {
+            if (Physics.Raycast(playerTransform.position, Vector3.back, out hit, range))
+            {
+                if (hit.collider.tag == "Block")
+                {
+                    Debug.Log("Pared");
+                    return false;
+                }
+            }
+        }
+        else if (lastKey == 'D')
+        {
+            if (Physics.Raycast(playerTransform.position, Vector3.right, out hit, range))
+            {
+                if (hit.collider.tag == "Block")
+                {
+                    Debug.Log("Pared");
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

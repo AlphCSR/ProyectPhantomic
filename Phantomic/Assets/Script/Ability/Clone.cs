@@ -7,143 +7,71 @@ public class Clone : MonoBehaviour
 
     // private Rigidbody playerMovementInput;
 
-    public Rigidbody cloneMovementInput;
-    public Transform playerTransform;
-    public GameObject clonePlayer;
-    public float cooldown = 0f;
-    public bool active = false;
-    public float walk;
-    public char lastKey;
+    
+    private float cooldown = 0f;
+    private bool active = false;
     public float range = 2f;
+    public float distance = 1.5f;
+    public GameObject clone;
+    private GameObject cloneClone;
 
-
-    public void Start()
-    {
-        cloneMovementInput = clonePlayer.GetComponent<Rigidbody>();
-        clonePlayer.SetActive(false);
-    }
+    private PlayerBase pb;
 
     public void Update()
     {
+        pb = FindObjectOfType<PlayerBase>();
         if (cooldown == 0f)
         {
-            clonePlayer.SetActive(false);
             active = true;
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                clonePlayer.SetActive(true);
-                Clonation();
-            }
+            Clonation();
         }
         else
         {
+            if (cooldown == 1f)
+            {
+                Clonation();
+            }
             cooldown -= 1f;
         }
     }
 
-    public void FixedUpdate()
-    {
-        MovementClone();
-    }
-
-    public void MovementClone()
-    {
-        // Movement Clone WASD
-        if (Input.GetKey(KeyCode.W))
-            cloneMovementInput.MovePosition(cloneMovementInput.position + Vector3.back * walk * Time.fixedDeltaTime);
-        else if (Input.GetKey(KeyCode.A))
-            cloneMovementInput.MovePosition(cloneMovementInput.position + Vector3.right * walk * Time.fixedDeltaTime);
-        else if (Input.GetKey(KeyCode.S))
-            cloneMovementInput.MovePosition(cloneMovementInput.position + Vector3.forward * walk * Time.fixedDeltaTime);
-        else if (Input.GetKey(KeyCode.D))
-            cloneMovementInput.MovePosition(cloneMovementInput.position + Vector3.left * walk * Time.fixedDeltaTime);
-    }
-
-    public bool Collision()
-    {
-        RaycastHit hit;
-
-        if (lastKey == 'W')
-        {
-            if (Physics.Raycast(playerTransform.position, Vector3.forward, out hit, range))
-            {
-                if (hit.collider.tag == "Block")
-                {
-                    Debug.Log("Pared");
-                    return false;
-                }
-            }
-        }
-        else if (lastKey == 'A')
-        {
-            if (Physics.Raycast(playerTransform.position, Vector3.left, out hit, range))
-            {
-                if (hit.collider.tag == "Block")
-                {
-                    Debug.Log("Pared");
-                    return false;
-                }
-            }
-        }
-        else if (lastKey == 'S')
-        {
-            if (Physics.Raycast(playerTransform.position, Vector3.back, out hit, range))
-            {
-                if (hit.collider.tag == "Block")
-                {
-                    Debug.Log("Pared");
-                    return false;
-                }
-            }
-        }
-        else if (lastKey == 'D')
-        {
-            if (Physics.Raycast(playerTransform.position, Vector3.right, out hit, range))
-            {
-                if (hit.collider.tag == "Block")
-                {
-                    Debug.Log("Pared");
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
 
     public void Clonation()
     {
-
-        if (active)
+        
+        if ( (active) && (Input.GetKeyDown(KeyCode.R)) )
         {
-            if (Collision())
+            if (pb.Collision())
             {
-                if ((Input.GetKey(KeyCode.W)) || (lastKey == 'W'))
+                if ((Input.GetKey(KeyCode.W)) || (pb.lastKey == 'W'))
                 {
-                    clonePlayer.transform.position = new Vector3(Mathf.Lerp(clonePlayer.transform.position.x, playerTransform.position.x, Time.deltaTime * 1000),
-                                                              Mathf.Lerp(clonePlayer.transform.position.y, playerTransform.position.y, Time.deltaTime * 1000),
-                                                              Mathf.Lerp(clonePlayer.transform.position.z, playerTransform.position.z + 1.5f, Time.deltaTime * 1000));
+                    cloneClone = Instantiate(clone, new Vector3(pb.playerTransform.position.x, pb.playerTransform.position.y, pb.playerTransform.position.z + distance), pb.playerTransform.rotation);
                 }
-                else if ((Input.GetKey(KeyCode.A)) || (lastKey == 'A'))
+                else if ((Input.GetKey(KeyCode.A)) || (pb.lastKey == 'A'))
                 {
-                    clonePlayer.transform.position = new Vector3(Mathf.Lerp(clonePlayer.transform.position.x, playerTransform.position.x - 1.5f, Time.deltaTime * 1000),
-                                                          Mathf.Lerp(clonePlayer.transform.position.y, playerTransform.position.y, Time.deltaTime * 1000),
-                                                          Mathf.Lerp(clonePlayer.transform.position.z, playerTransform.position.z, Time.deltaTime * 1000));
+                    cloneClone = Instantiate(clone, new Vector3(pb.playerTransform.position.x - distance, pb.playerTransform.position.y, pb.playerTransform.position.z), pb.playerTransform.rotation);
                 }
-                else if ((Input.GetKey(KeyCode.S)) || (lastKey == 'S'))
+                else if ((Input.GetKey(KeyCode.S)) || (pb.lastKey == 'S'))
                 {
-                    clonePlayer.transform.position = new Vector3(Mathf.Lerp(clonePlayer.transform.position.x, playerTransform.position.x, Time.deltaTime * 1000),
-                                                          Mathf.Lerp(clonePlayer.transform.position.y, playerTransform.position.y, Time.deltaTime * 1000),
-                                                          Mathf.Lerp(clonePlayer.transform.position.z, playerTransform.position.z - 1.5f, Time.deltaTime * 1000));
+                    cloneClone = Instantiate(clone, new Vector3(pb.playerTransform.position.x, pb.playerTransform.position.y, pb.playerTransform.position.z - distance), pb.playerTransform.rotation);
                 }
-                else if ((Input.GetKey(KeyCode.D)) || (lastKey == 'D'))
+                else if ((Input.GetKey(KeyCode.D)) || (pb.lastKey == 'D'))
                 {
-                    clonePlayer.transform.position = new Vector3(Mathf.Lerp(clonePlayer.transform.position.x, playerTransform.position.x + 1.5f, Time.deltaTime * 1000),
-                                                                Mathf.Lerp(clonePlayer.transform.position.y, playerTransform.position.y, Time.deltaTime * 1000),
-                                                                Mathf.Lerp(clonePlayer.transform.position.z, playerTransform.position.z, Time.deltaTime * 1000));
-                }
+                    cloneClone = Instantiate(clone, new Vector3(pb.playerTransform.position.x + distance, pb.playerTransform.position.y, pb.playerTransform.position.z), pb.playerTransform.rotation);
+                }                
                 active = false;
                 cooldown = 1000f;
-            }      
+                cloneClone.SetActive(true);
+            }
+            else
+            {
+                //Pared
+            }       
+        }
+        else if (!active)
+        {
+            cloneClone.SetActive(false);
+            Destroy(cloneClone);
         }
     }
 }

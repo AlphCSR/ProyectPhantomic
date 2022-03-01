@@ -4,41 +4,52 @@ using UnityEngine;
 
 public class Invisible : MonoBehaviour
 {
-    public float cooldown = 0f;
-    public bool active = false;
+    //Cooldown
+    private float cooldown = 0f;
+    private bool active = false;
+
+    //Materials
     public Material Inv;
     public Material Base;
-    public Renderer playerRenderer;
+    private Renderer playerRenderer;
+
+    //Asignar render del objeto base
+    public void Awake()
+    {
+        playerRenderer = GetComponent<Renderer>();
+    }
 
     public void Update()
     {
+        //Si la abilidad es activable 
         if (cooldown == 0f)
         {
             active = true;
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                Invisibility();
-            }  
+            Invisibility(); 
         }
+
+        //Si esta activa
         else 
         {
-            if (cooldown <= 400f)
+            //Desactivar invisibilidad
+            if (cooldown == 1f)
             {
                 Invisibility();
             }
             cooldown -= 1f;
         }
     }
-
     private void Invisibility()
     {
-        if (active)
+        //Si es activable y el jugador la invoca
+        if ( (active) && (Input.GetKeyDown(KeyCode.E)) )
         {
             playerRenderer.material = Inv;
             cooldown = 1000f;
             active = false;
         }
-        else
+        //Si no es activable
+        else if (!active)
         {
             playerRenderer.material = Base;
         }

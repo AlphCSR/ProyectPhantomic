@@ -5,23 +5,27 @@ using UnityEngine;
 public class Speed : MonoBehaviour
 {
     public float walk;
-    public float run = 3f;
+    public float run = 0.5f;
     public float cooldown = 0f;
     public bool active = false;
+    private PlayerBase pb;
 
     public void Update()
     {
+        pb = FindObjectOfType<PlayerBase>();
+        
+
         if (cooldown == 0f)
         {
             active = true;
-            if (Input.GetKeyDown(KeyCode.E))
+            
             {
                 SpeedWalk();
             }
         }
         else
         {
-            if (cooldown == 700f)
+            if (cooldown == 1f)
             {
                 SpeedWalk();
             }
@@ -31,15 +35,15 @@ public class Speed : MonoBehaviour
 
     public void SpeedWalk()
     {
-        if (active)
+        if ( (active) && (Input.GetKeyDown(KeyCode.E)) )
         {
-            walk = (walk + run);
+            pb.walk = (pb.walk + run);
             active = false;
             cooldown = 1000f;
         }
-        else
+        else if (!active)
         {
-           walk = (walk - run);
+            pb.walk = (pb.walk - run);
         }
     }
 }
