@@ -25,11 +25,11 @@ public class ProyectilCloth : MonoBehaviour
         }
         else if (pb.lastKey == 'S')
         {
-            proyectileRB.velocity = transform.right * 1f;
+            proyectileRB.velocity = transform.forward * -1f;
         }
         else if (pb.lastKey == 'D')
         {
-            proyectileRB.velocity = transform.forward * -1f;
+            proyectileRB.velocity = transform.right * 1f;
         }
 
         Invoke("Cloth", 3f);

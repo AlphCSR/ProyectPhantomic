@@ -8,7 +8,8 @@ public class PlayerBase : MonoBehaviour
     public float walk = 3f;
     public char lastKey;
     public Transform playerTransform;
-    public float range = 2.5f;
+    public float rangeCollision = 2.5f;
+    public float rangeScare = 1f;
 
     public void Awake()
     {
@@ -16,11 +17,17 @@ public class PlayerBase : MonoBehaviour
         playerTransform = GetComponent<Transform>();
     }
 
+    public void Update()
+    {
+        //Scare();
+    }
+
     public void FixedUpdate()
     {
         Movement();
     }
 
+    //Movimiento del personaje y guardado de la ultima posicion 
     public void Movement()
     {
         if (Input.GetKey(KeyCode.W))
@@ -45,54 +52,82 @@ public class PlayerBase : MonoBehaviour
         }
     }
 
+    //Detectar colisiones del personaje basada en la posicion actual
     public bool Collision()
     {
         RaycastHit hit;
 
         if (lastKey == 'W')
         {
-            if (Physics.Raycast(playerTransform.position, Vector3.forward, out hit, range))
+            if (Physics.Raycast(playerTransform.position, Vector3.forward, out hit, rangeCollision))
             {
-                if (hit.collider.tag == "Block")
-                {
-                    Debug.Log("Pared");
-                    return false;
-                }
+                Debug.Log("Pared");
+                return false;
             }
         }
         else if (lastKey == 'A')
         {
-            if (Physics.Raycast(playerTransform.position, Vector3.left, out hit, range))
+            if (Physics.Raycast(playerTransform.position, Vector3.left, out hit, rangeCollision))
             {
-                if (hit.collider.tag == "Block")
-                {
-                    Debug.Log("Pared");
-                    return false;
-                }
+                Debug.Log("Pared");
+                return false;
             }
         }
         else if (lastKey == 'S')
         {
-            if (Physics.Raycast(playerTransform.position, Vector3.back, out hit, range))
+            if (Physics.Raycast(playerTransform.position, Vector3.back, out hit, rangeCollision))
             {
-                if (hit.collider.tag == "Block")
-                {
-                    Debug.Log("Pared");
-                    return false;
-                }
+                Debug.Log("Pared");
+                return false;
             }
         }
         else if (lastKey == 'D')
         {
-            if (Physics.Raycast(playerTransform.position, Vector3.right, out hit, range))
+            if (Physics.Raycast(playerTransform.position, Vector3.right, out hit, rangeCollision))
             {
-                if (hit.collider.tag == "Block")
-                {
-                    Debug.Log("Pared");
-                    return false;
-                }
+                Debug.Log("Pared");
+                return false;
             }
         }
         return true;
     }
+    /*
+    public void Scare()
+    {
+        RaycastHit hit;
+
+        if ( Input.GetKeyDown(KeyCode.Q) )
+        {
+            if (lastKey == 'W') 
+            {
+                if (Physics.Raycast(playerTransform.position, Vector3.forward, out hit, rangeCollision, LayerMask.GetMask("Enemy")))
+                {
+                    hit.transform.GetComponent<Interactable>().Interact();
+                }
+            }
+            else if (lastKey == 'A')
+            {
+
+                if (Physics.Raycast(playerTransform.position, Vector3.left, out hit, rangeCollision, LayerMask.GetMask("Enemy")))
+                {
+                    hit.transform.GetComponent<Interactable>().Interact();
+                }
+            }
+            else if (lastKey == 'S')
+            {
+                if (Physics.Raycast(playerTransform.position, Vector3.back, out hit, rangeCollision, LayerMask.GetMask("Enemy")))
+                {
+                    hit.transform.GetComponent<Interactable>().Interact();
+                }
+            }
+            else if (lastKey == 'D')
+            {
+                if (Physics.Raycast(playerTransform.position, Vector3.right, out hit, rangeCollision, LayerMask.GetMask("Enemy")))
+                {
+                    hit.transform.GetComponent<Interactable>().Interact();
+                }
+            }
+        }  
+    }
+    */
 }

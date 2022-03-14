@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class Blindness : MonoBehaviour
 {
+    public float maxCooldown = 1000f;
     public GameObject clothProyectile;
     public GameObject clothProyectileClone;
     public float cooldown = 0f;
     public float distance = 0.6f;
     public bool active = false;
-    private PlayerBase pb;
+    public PlayerBase pb;
+    public ChargePlayer3 ch;
 
     public void Start()
     {
+        ch = FindObjectOfType<ChargePlayer3>();
+        ch.text2.text = "Blindess (R)";
 
     }
     public void Update()
@@ -50,7 +54,7 @@ public class Blindness : MonoBehaviour
                 }
                 clothProyectileClone.SetActive(true);
                 active = true;
-                cooldown = 1000f;
+                cooldown = maxCooldown;
 
             }
 

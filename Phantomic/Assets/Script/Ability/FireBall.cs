@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class FireBall : MonoBehaviour
 {
-    private bool active;
+    public float maxCooldown = 1000f;
+    public bool active;
     private float distance = 1f;
     private float cooldown;
     public float range = 4f;
@@ -12,6 +13,14 @@ public class FireBall : MonoBehaviour
     public char lastKey;
     public GameObject rocketClone;
     private PlayerBase pb;
+
+    private ChargePlayer2 ch;
+
+    public void Start()
+    {
+        ch = FindObjectOfType<ChargePlayer2>();
+        ch.text2.text = "FireBall (R)";
+    }
 
     public void Update()
     {
@@ -54,14 +63,14 @@ public class FireBall : MonoBehaviour
                 rocketClone = Instantiate(fireBall, new Vector3(pb.playerTransform.position.x + distance, pb.playerTransform.position.y, pb.playerTransform.position.z), pb.playerTransform.rotation);
             }
             active = false;
-            cooldown = 1000f;
+            cooldown = maxCooldown;
             pb.playerMovementInput.constraints = RigidbodyConstraints.FreezePosition;
 
         }
         else if (!active)
         {
-            Destroy(rocketClone);
             active = true;
+            Destroy(rocketClone);
             pb.playerMovementInput.constraints = RigidbodyConstraints.None;
             pb.playerMovementInput.constraints = RigidbodyConstraints.FreezeRotationY;
         }

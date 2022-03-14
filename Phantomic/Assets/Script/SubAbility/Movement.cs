@@ -26,7 +26,7 @@ public class Movement : MonoBehaviour
 
     public void MovementClone()
     {
-        // Movement Clone WASD
+        //Movimiento inverso del Clone 
         if (Input.GetKey(KeyCode.W))
             playerMovementInput.MovePosition(playerMovementInput.position + Vector3.back * walk * Time.fixedDeltaTime);
         else if (Input.GetKey(KeyCode.A))

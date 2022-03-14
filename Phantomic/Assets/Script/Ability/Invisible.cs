@@ -1,22 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class Invisible : MonoBehaviour
 {
     //Cooldown
-    private float cooldown = 0f;
-    private bool active = false;
+    public float cooldown = 0f;
+    public float maxCooldown = 1000f;
+    public bool active = false;
 
     //Materials
     public Material Inv;
     public Material Base;
     private Renderer playerRenderer;
 
+    private ChargePlayer1 ch;
+
     //Asignar render del objeto base
     public void Awake()
     {
         playerRenderer = GetComponent<Renderer>();
+    }
+
+    public void Start()
+    {
+        ch = FindObjectOfType<ChargePlayer1>();
+        ch.text1.text = "Invisible (E)";
     }
 
     public void Update()
@@ -41,17 +51,18 @@ public class Invisible : MonoBehaviour
     }
     private void Invisibility()
     {
-        //Si es activable y el jugador la invoca
+        //Si es activable y el jugador la invoca se coloca la invivisibilidad
         if ( (active) && (Input.GetKeyDown(KeyCode.E)) )
         {
             playerRenderer.material = Inv;
-            cooldown = 1000f;
+            cooldown = maxCooldown;
             active = false;
         }
-        //Si no es activable
+        //Si no es activable se quita
         else if (!active)
         {
             playerRenderer.material = Base;
         }
     }
+
 }
